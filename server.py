@@ -39,15 +39,15 @@ class handler(BaseHTTPRequestHandler):
             post_data       = self.rfile.read(content_length).decode('utf-8')
             post_data       = urllib.parse.parse_qs(post_data)
 
-            lon = post_data['lon'][0]
             lat = post_data['lat'][0]
+            lon = post_data['lon'][0]
 
             self.send_response(666)
             self.send_header('Content-type','text/html')
             self.end_headers()
 
             self.wfile.write(bytes("demon", "utf-8"))
-            print(f"{lon},{lat}")
+            print(f"{lat},{lon}")
         else:
             self.send_response(555)
             self.send_header('Content-type','text/html')
