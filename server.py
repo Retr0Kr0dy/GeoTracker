@@ -2,8 +2,8 @@
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib
-import ssl 
-from sys import exit 
+import ssl
+from sys import exit
 
 addr        = '0.0.0.0'
 port        = 8000
@@ -21,19 +21,18 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(bytes("it isn't that easy...", "utf-8"))
-            exit(0)
-        
-        try:        
+
+        try:
             f = open(self.path[1:]).read()
         except:
            f = "File not found"
-        
+
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
 
         self.wfile.write(bytes(f, "utf-8"))
-    
+
     def do_POST(self):
         if (self.path == '/locate.php'):
             content_length  = int(self.headers['Content-Length'])
@@ -55,7 +54,7 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(bytes("it isn't that easy...", "utf-8"))
-            
+
 def main():
     httpd = HTTPServer((addr, port), handler)
     httpd.socket = ssl.wrap_socket(httpd.socket, keyfile=keyfile, certfile=certfile, server_side=True)
