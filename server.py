@@ -14,6 +14,20 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if (self.path == '/'):
             self.path = '/index.html'
+            try:
+                f = open(self.path[1:]).read()
+            except:
+               f = "File not found"
+
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+
+            self.wfile.write(bytes(f, "utf-8"))
+
+        elif (self.path == '/favicon.ico'):
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
 
         else:
             self.send_response(555)
@@ -21,17 +35,6 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
 
             self.wfile.write(bytes("it isn't that easy...", "utf-8"))
-
-        try:
-            f = open(self.path[1:]).read()
-        except:
-           f = "File not found"
-
-        self.send_response(200)
-        self.send_header('Content-type','text/html')
-        self.end_headers()
-
-        self.wfile.write(bytes(f, "utf-8"))
 
     def do_POST(self):
         if (self.path == '/locate.php'):
@@ -42,7 +45,7 @@ class handler(BaseHTTPRequestHandler):
             lat = post_data['lat'][0]
             lon = post_data['lon'][0]
 
-            self.send_response(666)
+            self.send_response(200)
             self.send_header('Content-type','text/html')
             self.end_headers()
 
